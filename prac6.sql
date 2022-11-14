@@ -20,8 +20,35 @@ inner join
 on b.spelersnr = t.spelersnr
 
 -- oef 3
+-- 1
 select spelersnr, naam, voorletters
 from tennis3.spelers S
 where S.spelersnr = (select spelersnr 
                     from tennis3.boetes 
-                    where )
+                    where betalingsnr = 4)
+
+select spelersnr, naam, voorletters
+from tennis3.spelers S
+where S.spelersnr = (
+    select spelersnr 
+    from tennis3.teams T
+    where T.teamnr = (
+        select teamnr 
+        from tennis3.wedstrijden
+        where wedstrijdnr = 2
+    ))
+
+-- oef 4
+-- 1
+select spelersnr, naam
+from tennis3.spelers S
+where S.spelersnr in (
+    select spelersnr
+    from tennis3.boetes B
+    where B.bedrag > 50 and B.datum is not null
+)
+
+-- 2
+select betalingsnr, bedrag
+from tennis3.boetes B
+where B.bedrag 
