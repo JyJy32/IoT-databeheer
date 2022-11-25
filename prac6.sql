@@ -51,4 +51,27 @@ where S.spelersnr in (
 -- 2
 select betalingsnr, bedrag
 from tennis3.boetes B
-where B.bedrag 
+where B.bedrag = 100 or B.bedrag = 5*B.betalingsnr or B.bedrag = (
+    select bedrag 
+    from tennis3.boetes 
+    where betalingsnr = 2 
+)
+
+-- oef 5
+-- 1
+select spelersnr
+from tennis3.spelers
+where spelersnr not in (
+    select spelersnr
+    from tennis3.wedstrijden
+    where gewonnen = 3
+)
+
+-- 2
+select teamnr, divisie
+from tennis3.teams
+where teamnr not in (
+    select teamnr
+    from tennis3.wedstrijden
+    where spelersnr = 6
+)
