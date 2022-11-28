@@ -36,9 +36,11 @@ FROM tennis3.spelers
 ORDER BY right(naam, 1) DESC
 
 -- 4
-SELECT naam, (SELECT count(spelersnr)
-FROM tennis3.boetes b 
-WHERE b.spelersnr = s.spelersnr) as aantal
+SELECT naam, (
+    SELECT count(spelersnr)
+    FROM tennis3.boetes b 
+    WHERE b.spelersnr = s.spelersnr
+    ) as aantal
 FROM tennis3.spelers s
 ORDER BY aantal DESC, naam ASC
 
@@ -80,12 +82,13 @@ FROM tennis3.spelers
 GROUP BY jaartoe
 
 -- 3
-SELECT count(teamnr) as Wedstrijden, sum(GEWONNEN) as aantal_gewonnen_sets
+SELECT teamnr, count(teamnr) as Wedstrijden, sum(GEWONNEN) as aantal_gewonnen_sets
 FROM tennis3.wedstrijden
 WHERE teamnr = (
     SELECT teamnr
     FROM tennis3.teams
-    WHERE divisie = "ere") /* werkt wel maar gebruikt geen group by */
+    WHERE divisie = "ere") /* werkt wel maar gebruikt geen group by? */
+
 
 -- 4
 SELECT spelersnr, sum(bedrag) as totaal_bedrag, (
@@ -115,4 +118,32 @@ FROM tennis3.wedstrijden w
 GROUP BY spelersnr
 
 -- 7
+SELECT teamnr, spelersnr, count(spelersnr) as aantal
+FROM tennis3.wedstrijden
+WHERE gewonnen > verloren and teamnr = (
+    SELECT teamnr
+    FROM tennis3.teams t
+    WHERE t.spelersnr in (
+        SELECT spelersnr
+        FROM tennis3.spelers s
+        WHERE s.plaats = "Den Haag"
+))
+GROUP BY spelersnr
 
+-- oef 5
+-- 1
+SELECT plaats, count() 
+FROM spelersgroup 
+BY plaats HAVING count()>4
+
+-- 2
+select spelersnr 
+from boetes 
+group by spelersnr 
+having sum(bedrag)>150;
+
+-- 3
+select teamnr, divisie 
+from teams 
+group by teamnr 
+having count(spelersnr)>4;

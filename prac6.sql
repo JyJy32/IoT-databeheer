@@ -3,11 +3,20 @@
 
 -- oef 1
 -- 1
-select (select divisie from tennis3.teams where teamnr = 1) as divisie_t1, (select divisie from tennis3.teams where teamnr = 2) as divisie_t2;
+select (
+    select divisie 
+    from tennis3.teams 
+    where teamnr = 1
+    ) as divisie_t1, (
+        select divisie 
+        from tennis3.teams 
+        where teamnr = 2) as divisie_t2;
 -- 2
-select spelersnr, (select count(spelersnr) 
-from tennis3.wedstrijden w 
-where s.spelersnr = w.spelersnr) as aantal
+select spelersnr, (
+    select count(spelersnr) 
+    from tennis3.wedstrijden w 
+    where s.spelersnr = w.spelersnr
+    ) as aantal
 from tennis3.spelers s;
 
 -- oef 2

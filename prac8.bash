@@ -13,7 +13,7 @@ or
 man mosquitto_pub
 # 5
 
-# 6
+# 11
 mosquitto_sub -h localhost -p 1883 -t "/AP/+/+/temperature" -i mosquitto_sub_ap -v > mqttlog
 
 # oef 2
