@@ -1,23 +1,23 @@
 create database if not exists `sensordevices`;
 use `sensordevices`;
 
-create table if not exists `Brands`
-	(id smallint not null primary key auto_increment,
+create table if not exists `tblBrands`(
+    id smallint not null primary key auto_increment,
     brandName VARCHAR(50) NOT NULL unique);
 
-create table if not exists `tblDevices` 
-	(id INT NOT NULL primary key auto_increment,
+create table if not exists sensordevices.`tblDevices` (
+    id INT NOT NULL primary key auto_increment,
     deviceName VARCHAR(50) NOT NULL,
-    brandId INT NOT NULL,
-    foreign key (brandId) references Brands (id));
+    brandId smallint NOT NULL,
+    foreign key (brandId) references tblBrands(id));
     
-create table if not exists `tblSensors`
+create table if not exists sensordevices.`tblSensors`
 	(id INT NOT NULL primary key auto_increment,
     sensorType VARCHAR(50) NOT NULL unique,
     sensorDescription VARCHAR(100),
     UoM VARCHAR(10));
 
-create table if not exists `tblSensorDevices`
+create table if not exists sensordevices.`tblSensorDevices`
 	(id INT NOT NULL primary key auto_increment,
     deviceId INT NOT NULL,
     sensorId INT NOT NULL,
@@ -25,14 +25,14 @@ create table if not exists `tblSensorDevices`
     foreign key (deviceId) references tblDevices (id),
     foreign key (sensorId) references tblSensors (id));
 
-create table if not exists `tblSensorData`
+create table if not exists sensordevices.`tblSensorData`
 	(id INT NOT NULL primary key auto_increment,
     sensorDeviceId INT NOT NULL,
     sensorValue FLOAT,
     `timestamp` DATETIME,
-    foreign key (id) references tblSensorDevices (sensorDeviceId));
+    foreign key (sensorDeviceId) references tblSensorDevices (id));
 
-create table if not exists `tblSensorDataLatest`
+create table if not exists sensordevices.`tblSensorDataLatest`
 	(id INT NOT NULL primary key auto_increment,
     sensorDeviceId INT NOT NULL unique,
     sensorValue FLOAT,
@@ -60,8 +60,8 @@ end;
 $$
 DELIMITER ;
 
-INSERT INTO `tblBrands` (brandName) VALUES ('Hewlett-Packard'),('Texas Instruments'),('Element14');
-INSERT INTO `tblDevices` (deviceName, brandId) VALUES ('Simon\'s Raspberry Pi', (SELECT id from tblBrands where brandName = 'Element14'));
+INSERT INTO sensordevices.`tblBrands` (brandName) VALUES ('Hewlett-Packard'),('Texas Instruments'),('Element14');
+INSERT INTO `tblDevices` (deviceName, brandId) VALUES ('Simon\'s Raspberry Pi', (SELECT id from tbltblBrands where brandName = 'Element14'));
 INSERT INTO `tblSensors` (sensorType, sensorDescription, UoM) VALUES ('temp','ambiant room temperature','°C'),('hum','Relative Humidity','%'),('pres','barometric air presure','hPa'),('CO2','Carbon dioxide concetration','ppm');
 INSERT INTO `tblSensorDevices` 
 	(deviceId, sensorId) 
