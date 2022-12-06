@@ -61,11 +61,11 @@ $$
 DELIMITER ;
 
 INSERT INTO sensordevices.`tblBrands` (brandName) VALUES ('Hewlett-Packard'),('Texas Instruments'),('Element14');
-INSERT INTO `tblDevices` (deviceName, brandId) VALUES ('Simon\'s Raspberry Pi', (SELECT id from tbltblBrands where brandName = 'Element14'));
-INSERT INTO `tblSensors` (sensorType, sensorDescription, UoM) VALUES ('temp','ambiant room temperature','°C'),('hum','Relative Humidity','%'),('pres','barometric air presure','hPa'),('CO2','Carbon dioxide concetration','ppm');
-INSERT INTO `tblSensorDevices` 
+INSERT INTO sensordevices.`tblDevices` (deviceName, brandId) VALUES ("Simon\'s Raspberry Pi", (SELECT id from sensordevices.tblBrands where brandName = 'Element14'));
+INSERT INTO sensordevices.`tblSensors` (sensorType, sensorDescription, UoM) VALUES ('temp','ambiant room temperature','°C'),('hum','Relative Humidity','%'),('pres','barometric air presure','hPa'),('CO2','Carbon dioxide concetration','ppm');
+INSERT INTO sensordevices.`tblSensorDevices` 
 	(deviceId, sensorId) 
     VALUES 
-    ((SELECT id from tblDevices where deviceName = 'Simon\'s Raspberry Pi'),(SELECT id from tblSensors where sensorType = 'temp')),
-    ((SELECT id from tblDevices where deviceName = 'Simon\'s Raspberry Pi'),(SELECT id from tblSensors where sensorType = 'hum'));
-INSERT INTO `tblSensorData` (sensorDeviceId, sensorValue, `timestamp`) values (1, 20.3, NOW());
+    ((SELECT id from sensordevices.tblDevices where deviceName = "Simon\'s Raspberry Pi"),(SELECT id from sensordevices.tblSensors where sensorType = 'temp')),
+    ((SELECT id from sensordevices.tblDevices where deviceName = "Simon\'s Raspberry Pi"),(SELECT id from sensordevices.tblSensors where sensorType = 'hum'));
+INSERT INTO sensordevices.`tblSensorData` (sensorDeviceId, sensorValue, `timestamp`) values (1, 20.3, NOW());
