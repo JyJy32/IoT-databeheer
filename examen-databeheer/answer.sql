@@ -1,0 +1,26 @@
+-- 1 
+SELECT `AANVOERDERA`, `TEAMA`, `TEAMB`, `GEWONNEN` - `VERLOREN` AS RESULTAAT
+FROM `PADEL`.`tblCompetitie`;
+
+-- 2
+SELECT `VOORNAAM`, `NAAM`, `PLAATS`
+FROM `PADEL`.`tblSpelers`
+WHERE `PLAATS` = "Antwerpen" OR `PLAATS` = "Gent";
+
+-- 3
+SELECT `VOORNAAM`, `NAAM`, `PLAATS`
+FROM `PADEL`.`tblSpelers`
+WHERE `POSTCODE` LIKE "BE2%";
+
+-- 4
+SELECT S.*, D.`FUNCTIE`,D.`EIND_DATUM` IS NULL AS actief
+FROM `PADEL`.`tbldirectie` D, `PADEL`.`tblspelers` S
+WHERE S.`SPELERSNR` = D.`SPELERSNR`;
+
+-- 5
+SELECT `SPELERSNR`, `BEDRAG`
+FROM `PADEL`.`tblcafetaria`
+WHERE `BEDRAG` <= 0;
+
+
+SELECT * FROM `PADEL`.`tblspelers`;
